@@ -9,6 +9,19 @@ interface useCanBeRefundedProps {
 	tradeData: Trade;
 }
 
+/**
+ * Determines whether a trade can be refunded based on the user's Terms of Service (TOS),
+ * the source of the refund request, and the time elapsed between the investment and the refund request.
+ *
+ * The function applies different approval time limits depending on whether the user is under the new or old TOS,
+ * and whether the refund request was made via phone or web app. It also considers the user's time zone and
+ * formats dates accordingly.
+ *
+ * @param tradeData - An object containing trade information, including sign-up date, time zone,
+ * investment date and time, refund request date and time, and the source of the request.
+ * @returns `true` if the refund request is within the allowed time limit, `false` if not, or `null`
+ * if required data is missing or invalid.
+ */
 function useCanBeRefunded({
 	tradeData,
 }: useCanBeRefundedProps): boolean | null {
@@ -58,28 +71,6 @@ function useCanBeRefunded({
 	} else {
 		return null;
 	}
-
-	console.table([
-		{
-			label: 'Investment',
-			dateTime: investmentDateTime.toFormat('d/M/yyyy HH:mm'),
-		},
-		{
-			label: 'Refund Registered',
-			dateTime: registeredRefundDateTime.toFormat('d/M/yyyy HH:mm'),
-		},
-		{
-			label: 'Time elapsed',
-			time: timeDifferenceInHours,
-		},
-		{
-			label: 'Week day registered',
-			day:
-				registeredRefundDateTime.weekdayLong +
-				' ' +
-				tradeData.source,
-		},
-	]);
 
 	return timeDifferenceInHours <= approvalTimeLimit;
 }

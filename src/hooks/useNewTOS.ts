@@ -14,7 +14,7 @@ interface useNewTOSProps {
  * @param {useNewTOSProps} params - The parameters for the hook.
  * @param {string} params.date - The ISO string representing the user's sign-up date.
  * @param {string} params.timeZone - The user's time zone (e.g., 'PST').
- * @returns {boolean} Returns `true` if the user's sign-up date is on or after the TOS update date for their time zone, otherwise `false`,  or `null` if the time zone is invalid..
+ * @returns {boolean | null} Returns `true` if the user's sign-up date is on or after the TOS update date for their time zone, otherwise `false`. Returns `null` if the time zone is invalid or if date parsing fails.
  */
 export function useNewTOS({ date, timeZone }: useNewTOSProps): boolean | null {
 	const validZone = getTimeZoneFromString(timeZone);
@@ -31,5 +31,5 @@ export function useNewTOS({ date, timeZone }: useNewTOSProps): boolean | null {
 		zone: validZone,
 	});
 
-	return signUpDate > newTOSDate;
+	return signUpDate.toMillis() > newTOSDate.toMillis();
 }

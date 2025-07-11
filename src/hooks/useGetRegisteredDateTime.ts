@@ -83,6 +83,7 @@ function useGetRegisteredDateTime({
 		}
 	}
 
+	// Return the adjusted registered date/time
 	return refundRequestDateTime;
 }
 
