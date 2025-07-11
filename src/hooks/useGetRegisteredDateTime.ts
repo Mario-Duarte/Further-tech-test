@@ -55,8 +55,6 @@ function useGetRegisteredDateTime({
 		const hour = refundRequestDateTime.hour;
 		const weekday = refundRequestDateTime.weekdayLong;
 
-		console.log({weekday});
-
 		if (weekday === 'Saturday') {
 			refundRequestDateTime = refundRequestDateTime
 				.plus({ days: 2 })
