@@ -56,24 +56,29 @@ function useGetRegisteredDateTime({
 		const weekday = refundRequestDateTime.weekdayLong;
 
 		if (weekday === 'Saturday') {
+			// If the request is on a Saturday, set it to 9 AM GMT on the next Monday
 			refundRequestDateTime = refundRequestDateTime
 				.plus({ days: 2 })
 				.set({ hour: 9, minute: 0 });
 		} else if (weekday === 'Sunday') {
+			// If the request is on a Sunday, set it to 9 AM GMT on the next Monday
 			refundRequestDateTime = refundRequestDateTime
 				.plus({ days: 1 })
 				.set({ hour: 9, minute: 0 });
 		} else if (hour >= 17) {
 			if (weekday === 'Friday') {
+				// If the request is after 5 PM GMT on a Friday, set it to 9 AM GMT on the next Monday
 				refundRequestDateTime = refundRequestDateTime
 					.plus({ days: 3 })
 					.set({ hour: 9, minute: 0 });
 			} else {
+				// If the request is after 5 PM GMT on a weekday, set it to 9 AM GMT on the next day
 				refundRequestDateTime = refundRequestDateTime
 					.plus({ days: 1 })
 					.set({ hour: 9, minute: 0 });
 			}
 		} else if (hour < 9) {
+			// If the request is before 9 AM GMT, set it to 9 AM GMT on the same day
 			refundRequestDateTime = refundRequestDateTime.set({
 				hour: 9,
 				minute: 0,

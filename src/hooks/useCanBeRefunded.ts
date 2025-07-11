@@ -65,8 +65,10 @@ function useCanBeRefunded({
 	// Determine approval time limit based on source and TOS in hours
 	let approvalTimeLimit: number;
 	if (tradeData.source === 'phone') {
+		// For phone requests, apply different limits based on TOS
 		approvalTimeLimit = userUnderNewTos ? 24 : 4;
 	} else if (tradeData.source === 'webApp') {
+		// For web app requests, apply different limits based on TOS
 		approvalTimeLimit = userUnderNewTos ? 16 : 8;
 	} else {
 		return null;
